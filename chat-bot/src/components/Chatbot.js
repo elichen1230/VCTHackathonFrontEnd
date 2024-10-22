@@ -107,7 +107,7 @@ const Chatbot = () => {
     setLevelTags((prevTags) => prevTags.filter(tag => tag !== tagToRemove)); // Remove level tag
   };
 
-  const [rating, setRating] = useState(200); // State to track rating slider value
+  const [rating, setRating] = useState(0.8); // State to track rating slider value
 
   return (
     <div className="chatbot-wrapper">
@@ -120,7 +120,7 @@ const Chatbot = () => {
               </span>
               {isRegionDropdownOpen && (
                 <ul className="dropdown-menu">
-                  {["North America", "Europe", "Asia", "Africa"].map((region) => (
+                  {["North America (NA)", "Europe", "Latin America", "Middle East and North Africa", "Oceania", "Asia Pacific", "Japan"].map((region) => (
                     <li key={region} onClick={() => handleRegionSelect(region)}>
                       {region}
                     </li>
@@ -136,7 +136,7 @@ const Chatbot = () => {
               </span>
               {isLevelDropdownOpen && (
                 <ul className="dropdown-menu">
-                  {["Beginner", "Intermediate", "Advanced"].map((level) => (
+                  {["International", "Game Changers", "Challengers"].map((level) => (
                     <li key={level} onClick={() => handleLevelSelect(level)}>
                       {level}
                     </li>

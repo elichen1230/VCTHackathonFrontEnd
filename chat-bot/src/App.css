@@ -3,5 +3,9 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f4f4f9;
+  background-image: url("ezname.png");
+  background-size: cover; /* image covers whole app */
+  background-position: center;  /* center image */
+  background-repeat: no-repeat; /* doesnt repeat image*/
 }
+
