@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { FaBars } from "react-icons/fa"; // Import Hamburger Icon
+import { FaBars } from "react-icons/fa";
 import "./Chatbot.css";
 
 const Chatbot = () => {
@@ -8,14 +8,16 @@ const Chatbot = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState("");
-  const [selectedLevel, setSelectedLevel] = useState(""); // State for selected level
-  const [regionTags, setRegionTags] = useState([]); // State for region tags
-  const [levelTags, setLevelTags] = useState([]); // State for level tags
-  const [isRegionDropdownOpen, setIsRegionDropdownOpen] = useState(false); // State for region dropdown menu
-  const [isLevelDropdownOpen, setIsLevelDropdownOpen] = useState(false); // State for level dropdown menu
+  const [selectedLevel, setSelectedLevel] = useState("");
+  const [regionTags, setRegionTags] = useState([]);
+  const [levelTags, setLevelTags] = useState([]);
+  const [isRegionDropdownOpen, setIsRegionDropdownOpen] = useState(false);
+  const [isLevelDropdownOpen, setIsLevelDropdownOpen] = useState(false);
+  const [rating, setRating] = useState(0.8);
+
   const chatboxRef = useRef(null);
-  const regionDropdownRef = useRef(null); // Ref for the region dropdown
-  const levelDropdownRef = useRef(null); // Ref for the level dropdown
+  const regionDropdownRef = useRef(null);
+  const levelDropdownRef = useRef(null);
 
   useEffect(() => {
     if (chatboxRef.current) {
@@ -23,7 +25,6 @@ const Chatbot = () => {
     }
   }, [messages]);
 
-  // Close dropdown if clicked outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -65,7 +66,7 @@ const Chatbot = () => {
       );
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
 
       const data = await response.json();
@@ -87,66 +88,98 @@ const Chatbot = () => {
     if (region && !regionTags.includes(region)) {
       setRegionTags((prevTags) => [...prevTags, region]);
       setSelectedRegion(region);
-      setIsRegionDropdownOpen(false); // Close dropdown after selection
+      setIsRegionDropdownOpen(false);
     }
   };
 
   const handleLevelSelect = (level) => {
     if (level && !levelTags.includes(level)) {
-      setLevelTags((prevTags) => [...prevTags, level]); // Add selected level to tags
+      setLevelTags((prevTags) => [...prevTags, level]);
       setSelectedLevel(level);
-      setIsLevelDropdownOpen(false); // Close dropdown after selection
+      setIsLevelDropdownOpen(false);
     }
   };
 
   const handleTagRemove = (tagToRemove) => {
-    setRegionTags((prevTags) => prevTags.filter(tag => tag !== tagToRemove));
+    setRegionTags((prevTags) => prevTags.filter((tag) => tag !== tagToRemove));
   };
 
   const handleLevelTagRemove = (tagToRemove) => {
-    setLevelTags((prevTags) => prevTags.filter(tag => tag !== tagToRemove)); // Remove level tag
+    setLevelTags((prevTags) => prevTags.filter((tag) => tag !== tagToRemove));
   };
-
-  const [rating, setRating] = useState(0.8); // State to track rating slider value
 
   return (
     <div className="chatbot-wrapper">
       <nav className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
         <ul>
-          <li>
+          <li className="filter-section">
             <div ref={regionDropdownRef}>
-              <span onClick={() => setIsRegionDropdownOpen(!isRegionDropdownOpen)} style={{ cursor: 'pointer' }}>
+              <span
+                onClick={() => setIsRegionDropdownOpen(!isRegionDropdownOpen)}
+                style={{ cursor: "pointer" }}
+              >
                 Region
               </span>
               {isRegionDropdownOpen && (
                 <ul className="dropdown-menu">
-                  {["North America (NA)", "Europe", "Latin America", "Middle East and North Africa", "Oceania", "Asia Pacific", "Japan"].map((region) => (
+                  {[
+                    "North America (NA)",
+                    "Europe",
+                    "Latin America",
+                    "Middle East and North Africa",
+                    "Oceania",
+                    "Asia Pacific",
+                    "Japan",
+                  ].map((region) => (
                     <li key={region} onClick={() => handleRegionSelect(region)}>
                       {region}
                     </li>
                   ))}
                 </ul>
               )}
+              <div className="filter-tags">
+                {regionTags.map((tag, index) => (
+                  <span key={index} className="filter-tag region-tag">
+                    {tag}
+                    <button onClick={() => handleTagRemove(tag)}>×</button>
+                  </span>
+                ))}
+              </div>
             </div>
           </li>
-          <li>
+
+          <li className="filter-section">
             <div ref={levelDropdownRef}>
-              <span onClick={() => setIsLevelDropdownOpen(!isLevelDropdownOpen)} style={{ cursor: 'pointer' }}>
+              <span
+                onClick={() => setIsLevelDropdownOpen(!isLevelDropdownOpen)}
+                style={{ cursor: "pointer" }}
+              >
                 Level
               </span>
               {isLevelDropdownOpen && (
                 <ul className="dropdown-menu">
-                  {["International", "Game Changers", "Challengers"].map((level) => (
-                    <li key={level} onClick={() => handleLevelSelect(level)}>
-                      {level}
-                    </li>
-                  ))}
+                  {["International", "Game Changers", "Challengers"].map(
+                    (level) => (
+                      <li key={level} onClick={() => handleLevelSelect(level)}>
+                        {level}
+                      </li>
+                    )
+                  )}
                 </ul>
               )}
+              <div className="filter-tags">
+                {levelTags.map((tag, index) => (
+                  <span key={index} className="filter-tag level-tag">
+                    {tag}
+                    <button onClick={() => handleLevelTagRemove(tag)}>×</button>
+                  </span>
+                ))}
+              </div>
             </div>
           </li>
+
           <li className="rating-slider">
-            <label htmlFor="rating">Minumum VLR Rating: {rating}</label>
+            <label htmlFor="rating">Minimum VLR Rating: {rating}</label>
             <input
               id="rating"
               type="range"
@@ -168,26 +201,6 @@ const Chatbot = () => {
             aria-label="Toggle sidebar"
           />
           <h2>ValGPT</h2>
-        </div>
-
-        {/* Display selected region tags */}
-        <div className="region-tags">
-          {regionTags.map((tag, index) => (
-            <span key={index} className="region-tag">
-              {tag}
-              <button onClick={() => handleTagRemove(tag)}>x</button>
-            </span>
-          ))}
-        </div>
-
-        {/* Display selected level tags */}
-        <div className="level-tags">
-          {levelTags.map((tag, index) => (
-            <span key={index} className="level-tag">
-              {tag}
-              <button onClick={() => handleLevelTagRemove(tag)}>x</button>
-            </span>
-          ))}
         </div>
 
         <div className="chatbox" ref={chatboxRef}>

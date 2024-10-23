@@ -57,7 +57,6 @@ html {
   padding-top: 10%; /* this is for the tags to be shown at the top */
 }
 
-
 .chatbot-header h2 {
   flex-grow: 1;
   text-align: center;
@@ -80,23 +79,22 @@ html {
   flex-direction: column;
   gap: 10px;
   min-height: 0; /* prevents content from being pushed down*/
-    
-    
 }
 .chatbox {
   padding-top: 60px; /* Height of header */
   padding-bottom: 120px; /* Height of input container */
 }
 
-
-.message { /* messages */
+.message {
+  /* messages */
   display: flex;
   align-items: flex-start;
   margin: 5px 0;
   max-width: 70%;
 }
 
-.message-content { /* actual messages between model and user */
+.message-content {
+  /* actual messages between model and user */
   padding: 10px 15px;
   border-radius: 18px;
   font-size: 14px;
@@ -107,7 +105,6 @@ html {
 
 .message.user {
   align-self: flex-end;
-
 }
 
 .message.user .message-content {
@@ -123,7 +120,6 @@ html {
 .message.user + .message.bot,
 .message.bot + .message.user {
   margin-top: 5px;
-  
 }
 
 .chat-input-container {
@@ -134,8 +130,8 @@ html {
   bottom: 0; /* allignemnt */
   left: 0; /* stretches towards left */
   right: 0; /* strestches toward right */
-  width: 100%; 
-  z-index: 100; 
+  width: 100%;
+  z-index: 100;
 }
 
 input {
@@ -148,8 +144,8 @@ input {
   background-color: var(--transparent-black);
   color: var(--off-white);
   max-width: 700px;
-  font-family: 'Inter', sans-serif; 
-  font-weight: 400; 
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
 }
 
 input::placeholder {
@@ -157,7 +153,8 @@ input::placeholder {
   opacity: 0.7;
 }
 
-button {     /* this is the send button */
+button {
+  /* this is the send button */
   padding: 10px 20px;
   margin-left: 10px;
   background-color: var(--primary-red);
@@ -167,8 +164,8 @@ button {     /* this is the send button */
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s ease;
-  font-family: 'Inter', sans-serif; 
-  font-weight: 4000; 
+  font-family: "Inter", sans-serif;
+  font-weight: 4000;
 }
 
 button:hover {
@@ -235,16 +232,17 @@ button:hover {
 /* Sidebar Styling */
 .sidebar {
   position: fixed;
-  left: -250px;
+  left: -300px;
   width: 250px;
   height: 100%;
-  background-color: #53212B;
-  color: white;
+  background-color: #53212b;
+  color: #ddd;
   transition: left 0.3s ease;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   padding: 20px;
+  padding-top: 100px;
+  overflow-y: auto;
 }
 
 .sidebar.open {
@@ -254,33 +252,32 @@ button:hover {
 .sidebar ul {
   list-style-type: none;
   padding: 0;
+  margin-top: 30px; /* Add space for header */
 }
 
 .sidebar li {
-  margin: 15px 0;
+  margin: 4px 0;
   cursor: pointer;
 }
 
-.sidebar .dropdown-menu {
-  display: block;
-  position: absolute;
-  background: white;
+.dropdown-menu {
+  position: relative;
+  background: #ddd;
   border: 1px solid #ccc;
-  z-index: 10;
+  border-radius: 4px;
+  margin-top: 1px;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
-.sidebar .dropdown-menu li {
+.dropdown-menu li {
   padding: 8px 12px;
   cursor: pointer;
-  font-family: "Inter", sans-serif;
-  font-size: 16px;
   color: #333;
-  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.sidebar .dropdown-menu li:hover {
+.dropdown-menu li:hover {
   background-color: #f0f0f0;
-  color: var(--dark-red);
 }
 
 .region-tags {
@@ -290,8 +287,8 @@ button:hover {
 }
 
 .region-tag {
-  background: #007bff; /* background color*/
-  color: white; /* text */
+  background: #ddd; /* background color*/
+  color: black; /* text */
   padding: 5px 10px;
   border-radius: 10px;
   margin: 5px;
@@ -304,14 +301,14 @@ button:hover {
 
 /* hover effect for region tags*/
 
-.region-tag:hover { 
-  background-color: #054992; 
+.region-tag:hover {
+  background-color: #054992;
 }
 
 .region-tag button {
   background: none;
   border: none;
-  color: white;
+  color: #ddd;
   font-size: 18px;
   margin-left: 1px;
   transition: color 0.2s ease, transform 0.2s ease;
@@ -344,7 +341,7 @@ button:hover {
 
 .level-tag {
   background-color: #2f37ad; /* Original background color */
-  color: white;
+  color: #ddd;
   padding: 5px 10px;
   margin: 5px;
   border-radius: 10px; /* Rounded corners */
@@ -376,12 +373,11 @@ button:hover {
 
 /* Button styles for removing level tags */
 .level-tag button {
-  background: none; 
-  color: white; /* White color for button */
+  background: none;
+  color: #ddd; /* White color for button */
   border: none; /* No border */
   margin-left: 1px; /* Space between tag and button */
 }
-
 
 .rating-slider input[type="range"] {
   width: 100%;
@@ -417,4 +413,62 @@ button:hover {
 .rating-slider input[type="range"]::-webkit-slider-thumb:active {
   transform: scale(1.4); /* Increase size when active */
   background: #af3020; /* Darker color when pressed */
+}
+
+.filter-section {
+  margin: 15px 0;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.filter-section > div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.filter-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  gap: 4px;
+}
+
+.filter-tag.region-tag {
+  background-color: #ddd;
+  color: black;
+}
+
+.filter-tag.level-tag {
+  background-color: #ddd;
+  color: black;
+}
+
+.filter-tag button {
+  background: none;
+  border: none;
+  color: black;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+}
+
+.filter-tag button:hover {
+  color: white;
+  background: none;
 }
