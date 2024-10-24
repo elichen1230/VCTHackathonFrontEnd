@@ -78,7 +78,7 @@ const Chatbot = () => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-
+      
       const data = await response.json();
       const botMessage = { text: data.response, sender: "bot" };
       setMessages((prevMessages) => [...prevMessages, botMessage]);
