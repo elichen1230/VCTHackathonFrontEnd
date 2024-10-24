@@ -55,13 +55,23 @@ const Chatbot = () => {
     setInput("");
     setIsTyping(true);
 
+    // Log the prompt and other parameters being sent to the backend
+    const payload = {
+      prompt: input,
+      regions: regionTags, // Send all selected regions
+      levels: levelTags, // Send all selected levels
+      rating: parseFloat(rating),
+    };
+
+    console.log("Sending to backend:", payload); // Log the payload
+
     try {
       const response = await fetch(
         "https://mt30md50c7.execute-api.us-east-1.amazonaws.com/dev/ask",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt: input }),
+          body: JSON.stringify(payload), // Use the logged payload
         }
       );
 
@@ -122,15 +132,7 @@ const Chatbot = () => {
               </span>
               {isRegionDropdownOpen && (
                 <ul className="dropdown-menu">
-                  {[
-                    "North America (NA)",
-                    "Europe",
-                    "Latin America",
-                    "Middle East and North Africa",
-                    "Oceania",
-                    "Asia Pacific",
-                    "Japan",
-                  ].map((region) => (
+                  {["na", "eu", "sa", "mn", "oce", "ap", "jp"].map((region) => (
                     <li key={region} onClick={() => handleRegionSelect(region)}>
                       {region}
                     </li>
@@ -158,7 +160,7 @@ const Chatbot = () => {
               </span>
               {isLevelDropdownOpen && (
                 <ul className="dropdown-menu">
-                  {["International", "Game Changers", "Challengers"].map(
+                  {["international", "game changers", "challengers"].map(
                     (level) => (
                       <li key={level} onClick={() => handleLevelSelect(level)}>
                         {level}
